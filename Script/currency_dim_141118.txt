@@ -1,0 +1,11 @@
+CREATE TABLE sod_onehouse.currency_dim (
+  currency_cd STRING COMMENT 'Code of the currency',
+  currency_name STRING COMMENT 'Description of the currency',
+  job_id STRING COMMENT 'Operational field used to keep track of the record loading'
+)
+ COMMENT 'Dimension table for Currencies'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '|'
+WITH SERDEPROPERTIES ('field.delim'='|', 'serialization.format'='|')
+STORED AS PARQUET
+LOCATION 'hdfs://falabellatam01/ambiente1/pro/rtl/sod/cp/cor/exp/SOD_ONEHOUSE/currency_dim'
+TBLPROPERTIES ('COLUMN_STATS_ACCURATE'='true', 'numFiles'='1', 'numRows'='30', 'parquet.compression'='SNAPPY', 'rawDataSize'='90', 'totalSize'='1121')	

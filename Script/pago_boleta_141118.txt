@@ -1,0 +1,45 @@
+CREATE TABLE sod_cinfo_cl.pago_boleta (
+  blta_ano TINYINT COMMENT 'Año de la boleta',
+  blta_mes TINYINT COMMENT 'Mes de la boleta',
+  blta_dia TINYINT COMMENT 'Dia de la boleta',
+  unor_codg SMALLINT COMMENT 'Tienda',
+  blta_corr INT COMMENT 'correlativo boleta',
+  pgbl_nmro TINYINT COMMENT 'correlativo Pago',
+  cpgo_codg STRING COMMENT 'Codigo de la forma de pago usada',
+  pgbl_valr DECIMAL(11,2) COMMENT 'Valor pagado',
+  pgbl_atc STRING COMMENT 'Numero de Tarjeta de Crédito (TBK)',
+  pgbl_ano SMALLINT COMMENT 'No se esta ocupando',
+  pgbl_mes TINYINT COMMENT 'No se esta ocupando',
+  pgbl_dia TINYINT COMMENT 'No se esta ocupando',
+  pgbl_corrsma INT COMMENT 'No se esta ocupando',
+  pgbl_cuotas TINYINT COMMENT 'Cantidad de cuotas usados en este medio de pago',
+  pgbl_autoriza STRING COMMENT 'Codigo de autorizacion de la transaccion',
+  pgbl_anovig TINYINT COMMENT 'No se esta ocupando',
+  pgbl_mesvig TINYINT COMMENT 'No se esta ocupando',
+  pgbl_rut INT COMMENT 'Rut del cliente que paga',
+  pgbl_num_cheque STRING COMMENT 'Numero del cheque',
+  pgbl_cod_bco DECIMAL(3,0) COMMENT 'No se esta ocupando',
+  pgbl_n_cta_cte STRING COMMENT 'Numero de la cuenta corriente del cheque',
+  pgbl_rut_bono INT COMMENT 'No se esta ocupando',
+  pgbl_num_bono STRING COMMENT 'Nro. Bono Utilizado O NCR',
+  pgbl_numcomp STRING COMMENT 'No se esta ocupando',
+  pgbl_docrelativ STRING COMMENT 'No se esta ocupando',
+  pgbl_torigen INT COMMENT 'No se esta ocupando',
+  pgbl_corrfacbol INT COMMENT 'No se esta ocupando',
+  pgbl_num_tarjeta_tbk STRING COMMENT 'Numero de tarjeta transbank. Cuando se paga con giftcard, aqui se guarda ese numero de la giftcard.',
+  pgbl_cod_activa_gifcard STRING COMMENT 'Codigo de activacion de giftcard',
+  pgbl_cod_autorizacion_cmr DECIMAL(15,0) COMMENT 'Codigo de autorizacion de CMR, solo aplica cuando se usa la CMR',
+  pgbl_id_cliente STRING COMMENT 'No se esta ocupando',
+  pgbl_num_mesesdiferidos INT COMMENT 'Numero de meses diferido para Tarjeta CMR Falabella(0 pago normal, > 0 diferido )',
+  pgbl_escan_digit STRING COMMENT 'Si el documento de pago es escaneado o digitado. Valores = E/D',
+  pgbl_resp_dicom STRING COMMENT 'Si un documento fue consultado a Dicom, aqui viene el codigo de respuesta cuando se efectua dicha consulta.',
+  pgbl_monto_cartera DECIMAL(11,2) COMMENT 'Monto del cliente en cartera, usado para ver hasta que monto se acepta el recibo de cheques para el cliente (no va al DL)',
+  job_id STRING
+)
+PARTITIONED BY (
+  highwatermark STRING
+)
+WITH SERDEPROPERTIES ('serialization.format'='1')
+STORED AS PARQUET
+LOCATION 'hdfs://falabellatam01/ambiente1/pro/rtl/sod/cl/com/land/SOD_CINFO_CL/pago_boleta'
+TBLPROPERTIES ('last_modified_by'='hive', 'last_modified_time'='1512592328', 'parquet.compression'='SNAPPY')	

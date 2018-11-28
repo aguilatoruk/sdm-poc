@@ -1,0 +1,12 @@
+CREATE TABLE sod_onehouse.country_dim (
+  country_id STRING COMMENT 'This is the country code in format ISO3.  Example CL, AR, PE, CO, UR.',
+  country_name STRING COMMENT 'Country Name',
+  currency_cd STRING COMMENT 'Code of the currency for the country.',
+  job_id STRING COMMENT 'Operational field used to keep track of the record loading'
+)
+ COMMENT 'Entity that stores the Country information such as name.'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '|'
+WITH SERDEPROPERTIES ('field.delim'='|', 'serialization.format'='|')
+STORED AS PARQUET
+LOCATION 'hdfs://falabellatam01/ambiente1/pro/rtl/sod/cp/cor/exp/SOD_ONEHOUSE/country_dim'
+TBLPROPERTIES ('COLUMN_STATS_ACCURATE'='true', 'numFiles'='1', 'numRows'='64', 'parquet.compression'='SNAPPY', 'rawDataSize'='256', 'totalSize'='1700')	

@@ -1,0 +1,19 @@
+CREATE TABLE sod_onehouse.vendor_dim (
+  vendor_id STRING COMMENT 'This is the id of the Vendor',
+  vendor_country_id STRING COMMENT 'This is the main country of the provider.',
+  vendor_name STRING COMMENT 'This is the name of the Vendor',
+  vendor_return_acceptance_flg STRING COMMENT 'If the vendor accepts or not Item Returns',
+  vendor_currency_cd STRING COMMENT 'Code of the currency used by the vendor',
+  vendor_internal_id STRING COMMENT 'The internal Vendor Identification, some systems use this codification (ie: Colombia).',
+  job_id STRING COMMENT 'Operational field used to keep track of the record loading'
+)
+PARTITIONED BY (
+  country_id STRING COMMENT 'This is the country code in format ISO3.  Example CL, AR, PE, CO, UR.', 
+  business_unit_id STRING COMMENT 'A unique retailer assigned identifier for an RetailStore, DistributionCenter or AdministrationCenter'
+)
+ COMMENT 'Entity that contains the list of vendors/providers of the organization'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '|'
+WITH SERDEPROPERTIES ('field.delim'='|', 'serialization.format'='|')
+STORED AS PARQUET
+LOCATION 'hdfs://falabellatam01/ambiente1/pro/rtl/sod/cp/cor/exp/SOD_ONEHOUSE/Vendor_Dim'
+TBLPROPERTIES ('last_modified_by'='hive', 'last_modified_time'='1520374944', 'parquet.compression'='SNAPPY')	

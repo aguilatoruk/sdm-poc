@@ -1,0 +1,33 @@
+CREATE TABLE sod_onehouse.location_dim (
+  location_id INT COMMENT 'A unique system assigned identifier for the Location.',
+  location_name STRING COMMENT 'The common name  for the Location.',
+  size_val STRING COMMENT 'The floor area of the Location expressed in an appropriate UnitOfMeasure',
+  location_short_desc STRING COMMENT 'The short description of the location.',
+  location_store_flg STRING COMMENT 'Flag that defines whether the location is a Store or a Warehouse',
+  location_currency_cd STRING COMMENT 'Code of the currency',
+  location_address_val STRING COMMENT 'Address of the Location.',
+  location_responsible_name STRING COMMENT 'The name of the person responsible for the location.',
+  location_open_dt STRING COMMENT 'The opening date of the location',
+  location_close_dt STRING COMMENT 'The closing date of the location',
+  location_added_dt STRING COMMENT 'The day the location was added',
+  location_modification_dt STRING COMMENT 'The date the location had a modification',
+  company_cd STRING COMMENT 'The parent company that is in charge of the location',
+  company_name STRING COMMENT 'The parent company name',
+  location_city_name STRING COMMENT 'Region name of the Location.',
+  location_region_name STRING COMMENT 'Region name of the Location.',
+  longitude_val STRING COMMENT 'Longitude Value for georeferential positioning.',
+  latitude_val STRING COMMENT 'Latitude Value for georeferential positioning.',
+  location_status_desc STRING COMMENT 'Description of the Location Status.',
+  location_type_cd STRING COMMENT 'Defines the location Type whenever available.',
+  job_id STRING COMMENT 'Operational field used to keep track of the record loading'
+)
+PARTITIONED BY (
+  country_id STRING COMMENT 'This is the country code in format ISO3.  Example CL, AR, PE, CO, UR.', 
+  business_unit_id STRING COMMENT 'A unique retailer assigned identifier for an RetailStore, DistributionCenter or AdministrationCenter'
+)
+ COMMENT 'THis table identifies and descibes a place INSIDE A SITE and BUSINESS UNIT.  Inventory locations are places where stock is held.  A business unit site may have many locations.'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '|'
+WITH SERDEPROPERTIES ('field.delim'='|', 'serialization.format'='|')
+STORED AS PARQUET
+LOCATION 'hdfs://falabellatam01/ambiente1/pro/rtl/sod/cp/cor/exp/SOD_ONEHOUSE/Location_Dim'
+TBLPROPERTIES ('last_modified_by'='hive', 'last_modified_time'='1520374408', 'parquet.compression'='SNAPPY')	

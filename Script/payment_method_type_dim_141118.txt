@@ -1,0 +1,16 @@
+CREATE TABLE sod_onehouse.payment_method_type_dim (
+  payment_method_type_cd STRING COMMENT 'Code of the payment method used in the transaction.',
+  payment_method_type_desc STRING COMMENT 'Desription of the payment method used in the transaction.',
+  payment_priority_val INT COMMENT 'Defines the priority level that each payment method has.  This is used to set the main payment method when more than one has the same paid amount.',
+  job_id STRING COMMENT 'Job Id de YARN'
+)
+PARTITIONED BY (
+  business_unit_id STRING COMMENT 'The business unit id of the contact.', 
+  country_id STRING COMMENT 'This is the country code in format ISO3.  Example CL, AR, PE, CO, UR.'
+)
+ COMMENT 'Holds the different payment method used in the transaction.'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '|'
+WITH SERDEPROPERTIES ('field.delim'='|', 'serialization.format'='|')
+STORED AS PARQUET
+LOCATION 'hdfs://falabellatam01/ambiente1/pro/rtl/sod/cp/cor/exp/SOD_ONEHOUSE/payment_method_type_dim'
+TBLPROPERTIES ('parquet.compression'='SNAPPY')	
