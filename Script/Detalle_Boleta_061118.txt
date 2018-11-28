@@ -1,0 +1,51 @@
+CREATE TABLE sod_cinfo_cl.detalle_boleta (
+  blta_ano TINYINT COMMENT 'Año',
+  blta_mes TINYINT COMMENT 'Mes',
+  blta_dia TINYINT COMMENT 'Dia',
+  unor_codg SMALLINT COMMENT 'Tienda',
+  blta_corr INT COMMENT 'correlativo boleta',
+  dtbl_item SMALLINT COMMENT 'Item',
+  item_codg INT COMMENT 'SKU sin digito verificador',
+  dtbl_cntd DECIMAL(11,3) COMMENT 'cantidad de articulos',
+  dtbl_prec DECIMAL(11,2) COMMENT 'Precio sin Impuestos incluídos',
+  dtbl_ctun DECIMAL(11,2) COMMENT 'Cantidad del producto que lleva el cliente',
+  dtbl_scan STRING COMMENT 'No se esta ocupando',
+  dtbl_cod_barra STRING COMMENT 'Codigo EAN',
+  blta_marca_lb STRING COMMENT 'Marca LB S/N. S=Producto esta con despacho. Si hay reserva, y aqui esta con S, entonces el producto esta con despacho a domicilio.',
+  dtbl_cod_prom DECIMAL(18,4) COMMENT 'Código de la PROMOCIÓN bancaria aplicada al producto',
+  dtbl_tipo_prom STRING COMMENT 'Tipo de promocion',
+  dtbl_prec_original DECIMAL(11,2) COMMENT 'Precio unitario sin descuento',
+  dtbl_desc_prod STRING COMMENT 'Descripcion del producto',
+  dtbl_um_venta STRING COMMENT 'Unidad de medida de la venta',
+  dtbl_ctd_vendida_um_venta DECIMAL(11,2) COMMENT 'cantidad total vendida para la unidad asociado a la unidad de medida',
+  dtbl_precio_um_venta DECIMAL(11,2) COMMENT 'precio por unidad de medida',
+  dtbl_precio_extendido DECIMAL(11,2) COMMENT 'PxQ. Precio unitario por cantidad.',
+  dtbl_sku STRING COMMENT 'SKU con digito verificador (este es el item propiamente tal). Maestro de items viene de ODBMS',
+  dtbl_val_desc_unitario DECIMAL(11,2) COMMENT 'Valor del descuento unitario.',
+  dtbl_ctd_regalada DECIMAL(11,2) COMMENT 'Cantidad de productos regalados (ej, descuento 3x2, el valor seria 1)',
+  dtbl_recarga_telefonica STRING COMMENT 'S / N, indica si fue recarga telefonica.',
+  dtbl_marca_prddigitado STRING COMMENT 'Si fue digitado el producto o no',
+  dtbl_marca_vpm STRING COMMENT 'Marca de VPM. 0=Sin VPM, 1= VPM sin Flete, 3=VPM con Flete',
+  dtbl_hua STRING COMMENT 'Agrega Hua en el orden: Area (1), Depto (2), Lineal (1), Metro (2)',
+  dtbl_metodo_distribu STRING COMMENT 'Codigo de metodo de distribucion. Como se abastece el producto desde el origen del producto hasta llegar a la tienda',
+  dtbl_cod_metdistribu STRING COMMENT 'Codigo de metodo de distribucion. Si una bodega es la que distribuye, viene codigo de la bodega (codigo del local de la bodega), puede tambien venir codigo de proveedor.',
+  dtbl_comudespacho STRING COMMENT 'Comuna donde se debe despachar el producto',
+  dtbl_costoflete1 DECIMAL(15,2) COMMENT 'Costo del flete. Costo del producto hasta la tienda',
+  dtbl_costoflete2 DECIMAL(15,2) COMMENT 'Costo del flete. Costo de la "ultima milla", desde la tienda hasta el cliente',
+  dtbl_costologistico DECIMAL(15,2) COMMENT 'Costo logistico.',
+  dtbl_recupero DECIMAL(15,2) COMMENT 'No se esta ocupando',
+  dtbl_precio_publico DECIMAL(15,2) COMMENT 'Precio unitario con Iva',
+  blta_monto_tcc DECIMAL(15,2) COMMENT 'Monto utilizado tarjeta convenio sodimac. Similar a giftcard, pero para convenios.',
+  dtbl_marcaprod STRING COMMENT 'Descriptivo del tipo de producto (si es producto Stock, producto PE [producto especial], o FAM [generico])',
+  dtbl_venta_detalle STRING COMMENT 'Flag que permite identificar si el producto tiene detalle, ejemplo, algun defecto visible (S/N)',
+  dtbl_tiempo_sku STRING COMMENT 'registra el tiempo del ingreso del SKU en la grilla de la caja (cuando se scaneo).',
+  dtbl_interviene_supv STRING COMMENT 'Flag que identifica si el supervisor interviene para este producto.',
+  job_id STRING
+)
+PARTITIONED BY (
+  highwatermark STRING
+)
+WITH SERDEPROPERTIES ('serialization.format'='1')
+STORED AS PARQUET
+LOCATION 'hdfs://falabellatam01/ambiente1/pro/rtl/sod/cl/com/land/SOD_CINFO_CL/detalle_boleta'
+TBLPROPERTIES ('last_modified_by'='hive', 'last_modified_time'='1512592269', 'parquet.compression'='SNAPPY')	

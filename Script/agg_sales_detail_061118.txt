@@ -1,0 +1,32 @@
+CREATE TABLE sod_onehouse_exp.agg_sales_detail (
+  location_id INT COMMENT 'A unique system assigned identifier for the Location.',
+  sales_return_type_cd STRING COMMENT 'Code of the type of document loaded in Sales/Return. Options are: blta: Boleta. fctr: Factura. ntcr: Nota Credito. ntdb: Nota Debido. cdbo: Cargo Descuento Boleta. cdft: Cargo Descuento Factura. cdnc: Cargo Descuento Nota Credito. cdnd: Cargo Descuento Not',
+  st_extended_net_amt DECIMAL(20,4) COMMENT 'Standard field containing the Extenden Net Amount of the lines detail.',
+  st_extended_amt DECIMAL(20,4) COMMENT 'Standard field containing the Extenden Amount of the lines detail.',
+  business_area_sales_flg STRING COMMENT 'Highest level of the sales hierarchy flag. The possible values are: VE: Venta Empresa. VR: Venta Retail. ',
+  business_area_sales_desc STRING COMMENT 'Description of the Bunsiness Area Sales Flalg',
+  agg_business_area_sales_cnt INT COMMENT 'Aggregate field storing the total transaction counts for the first level of flags (Business_Area_Sales).',
+  channel_sales_flg STRING COMMENT 'The second level of the sales hierarchy. Possible values are: VEC: Venta Empresa Clientes. VES: Venta Empresa Subcanal. VSR: Venta Store Retail. VNSR: Venta Non Store Retail',
+  channel_sales_desc STRING COMMENT 'Description of the Channel Sales Flag',
+  agg_channel_sales_cnt INT COMMENT 'Aggregate field storing the total transaction counts for the second level of flags (Channel_Sales).',
+  sub_channel_level1_sales_flg STRING COMMENT 'Third level of the sales hierarchy. Possible values are: VK: Venta Kiosko. VDVD: Venta DVD',
+  sub_channel_level1_sales_desc STRING COMMENT 'Description of the Sub Channel level 1 Sales Flag',
+  agg_sub_channel_level1_cnt INT COMMENT 'Aggregate field storing the total transaction counts for the third level of flags (Sub_Channel_Level1_Sales).',
+  sub_channel_level2_sales_flg STRING COMMENT 'Forth Level of the sales hierarchy. Possible values are: VAT: VAT. UX+: UXPOS+. UXC: UXPOS Cotizaciones. SSEE: Servicios Especiales. APP: Mobile App. CALL: Call Center. WEB: Web',
+  sub_channel_level2_sales_desc STRING COMMENT 'Description of the Sub Channel level 2 Sales Flag',
+  agg_sub_channel_level2_cnt INT COMMENT 'Aggregate field storing the total transaction counts for the fourth level of flags (Sub_Channel_Level2_Sales). ',
+  sub_channel_level3_sales_flg STRING COMMENT 'Fifth and last level of the sales hierarchy. Possible values are: VATT: VAT Tienda. VATI: VAT Internet. WEBM: Web Mobile. WEBD: Web Desktop.',
+  sub_channel_level3_sales_desc STRING COMMENT 'Description of the Sub Channel level 3 Sales Flag',
+  agg_sub_channel_level3_cnt INT COMMENT 'Aggregate field storing the total transaction counts for the fifth level of flags (Sub_Channel_Level3_Sales).',
+  job_id STRING COMMENT 'Operational field used to keep track of the record loading'
+)
+PARTITIONED BY (
+  country_id STRING COMMENT 'Country in which the transaction is being done.', 
+  business_unit_id STRING COMMENT 'A unique retailer assigned identifier for an RetailStore, DistributionCenter or AdministrationCenter', 
+  sales_return_dt STRING COMMENT 'Date in which the sale/return occured.'
+)
+ COMMENT 'Aggregate table for reporting purposes.  It holds the sales information opened by the flag sales level at the detail level.'
+WITH SERDEPROPERTIES ('serialization.format'='1')
+STORED AS TEXTFILE
+LOCATION 'hdfs://falabellatam01/ambiente1/pro/rtl/sod/cp/cor/exp/SOD_ONEHOUSE_EXP/Agg_Sales_Detail'
+TBLPROPERTIES ('last_modified_by'='hive', 'last_modified_time'='1520375644')	

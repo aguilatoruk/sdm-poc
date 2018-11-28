@@ -1,0 +1,50 @@
+CREATE TABLE sod_cinfo_cl.detalle_factura (
+  fctr_ano TINYINT COMMENT 'Año',
+  fctr_mes TINYINT COMMENT 'mes',
+  fctr_dia TINYINT COMMENT 'dia',
+  uvta_codg SMALLINT COMMENT 'codigo local',
+  fctr_corr DECIMAL(15,0) COMMENT 'correlativo factura',
+  dtfc_item TINYINT COMMENT 'codigo de item',
+  item_codg INT COMMENT 'SKU sin digito verificador',
+  dtfc_ctdd DECIMAL(11,2) COMMENT 'Cantidad',
+  dtfc_prec DECIMAL(11,2) COMMENT 'Precio unitario del item neto',
+  dtfc_ctun DECIMAL(11,2) COMMENT 'Costo unitario del item',
+  dtfc_valfleun DECIMAL(11,2) COMMENT 'Valor flete unitario del item',
+  dtfc_viabas INT COMMENT 'Codigo de abastecimiento, como se abastece el producto.',
+  fctr_marca_lb STRING COMMENT 'Marca LB S/N. S=Producto esta con despacho. Si hay reserva, y aqui esta con S, entonces el producto esta con despacho a domicilio.',
+  dtfc_cod_prom DECIMAL(10,0) COMMENT 'Código de la PROMOCIÓN bancaria aplicada al producto',
+  dtfc_tipo_prom STRING COMMENT 'Tipo de promocion.',
+  dtfc_prec_original DECIMAL(11,2) COMMENT 'Precio original del articulo antes de la promocion',
+  dtfc_val_desc_unitario DECIMAL(11,2) COMMENT 'Valor del descuento unitario.',
+  dtfc_ctd_regalada DECIMAL(11,2) COMMENT 'Cantidad regalada (ej, 3x2, aqui apareceria 1)',
+  dtfc_desc_prod STRING COMMENT 'Descripcion del producto',
+  dtfc_um_venta STRING COMMENT 'Unidad de medida de la venta',
+  dtfc_ctd_vendida_um_venta DECIMAL(11,2) COMMENT 'Cantidad de la unidad de medida de la venta',
+  dtfc_precio_um_venta DECIMAL(11,2) COMMENT 'Precio unidad de medida de la venta',
+  dtfc_precio_extendido DECIMAL(11,2) COMMENT 'PxQ, precio total de los articulos sin IVA y CON descuentos aplicados',
+  dtfc_sku STRING COMMENT 'SKU del producto con digito verificador',
+  dtfc_recarga_telefonica STRING COMMENT 'Si la factura fue por una recarga telefonica',
+  dtfc_marca_prddigitado STRING COMMENT 'Si fue digitado el producto o no',
+  dtfc_marca_vpm STRING COMMENT 'Marca de VPM (0=Sin VPM, 1= VPM sin Flete, 3=VPM con Flete)',
+  dtfc_hua STRING COMMENT 'Ubicacion del producto en la tienda.',
+  dtfc_metodo_distribu STRING COMMENT 'Codigo de metodo de distribucion. Como se abastece el producto desde el origen del producto hasta llegar a la tienda',
+  dtfc_cod_metdistribu STRING COMMENT 'Codigo de metodo de distribucion. Si una bodega es la que distribuye, viene codigo de la bodega (codigo del local de la bodega), puede tambien venir codigo de proveedor.',
+  dtfc_comudespacho STRING COMMENT 'Comuna donde se debe despachar el producto',
+  dtfc_costoflete1 DECIMAL(15,2) COMMENT 'Costo del flete. Costo del producto hasta la tienda',
+  dtfc_costoflete2 DECIMAL(15,2) COMMENT 'Costo del flete. Costo de la "ultima milla", desde la tienda hasta el cliente',
+  dtfc_costologistico DECIMAL(15,2) COMMENT 'Costo logistico.',
+  dtfc_recupero DECIMAL(15,2) COMMENT 'No se esta ocupando',
+  fctr_monto_tcc DECIMAL(12,2) COMMENT 'Monto utilizado tarjeta convenio sodimac. Similar a giftcard, pero para convenios.',
+  dtfc_marcaprod STRING COMMENT 'Marca de VPM (0=Sin VPM, 1= VPM sin Flete, 3=VPM con Flete)',
+  dtfc_venta_detalle STRING COMMENT 'Flag que permite identificar si el producto tiene detalle, ejemplo, algun defecto visible (S/N)',
+  dtfc_tiempo_sku STRING COMMENT 'registra el tiempo del ingreso del SKU en la grilla de la caja (cuando se scaneo).',
+  dtfc_interviene_supv STRING COMMENT 'Flag que identifica si el supervisor interviene para este producto.',
+  job_id STRING
+)
+PARTITIONED BY (
+  highwatermark STRING
+)
+WITH SERDEPROPERTIES ('serialization.format'='1')
+STORED AS PARQUET
+LOCATION 'hdfs://falabellatam01/ambiente1/pro/rtl/sod/cl/com/land/SOD_CINFO_CL/detalle_factura'
+TBLPROPERTIES ('last_modified_by'='hive', 'last_modified_time'='1512592277', 'parquet.compression'='SNAPPY')	

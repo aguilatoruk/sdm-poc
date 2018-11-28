@@ -1,0 +1,56 @@
+CREATE TABLE sod_cinfo_cl.factura (
+  fctr_ano TINYINT COMMENT 'Año',
+  fctr_mes TINYINT COMMENT 'mes',
+  fctr_dia TINYINT COMMENT 'dia',
+  unor_codg SMALLINT COMMENT 'tienda',
+  fctr_corr DECIMAL(20,4) COMMENT 'correlativo factura',
+  fctr_hh TINYINT COMMENT 'hora',
+  fctr_mm TINYINT COMMENT 'minuto',
+  prvd_codg INT COMMENT 'codigo de proveedor (el que compra), se usa poco, mas importante tener el RUT',
+  fctr_caja TINYINT COMMENT 'No se esta ocupando',
+  clnt_rut INT COMMENT 'Rut del cliente',
+  clnt_cdrc TINYINT COMMENT 'No se esta ocupando',
+  fctr_vcdg SMALLINT COMMENT 'codigo del vendedor (venta empresa)',
+  fctr_tvta STRING COMMENT 'Tipo Venta (B,D,S, B=Bodega, D=Directa, S=Stock)',
+  fctr_valr DECIMAL(20,4) COMMENT 'Valor neto',
+  fctr_desc DECIMAL(20,4) COMMENT 'Descuento',
+  fctr_iva DECIMAL(20,4) COMMENT 'Iva',
+  fctr_totl DECIMAL(20,4) COMMENT 'Total con Impuestos',
+  clsc_codg TINYINT COMMENT 'No se esta ocupando',
+  fctr_csto DECIMAL(20,4) COMMENT 'Costo total de los articulos comprados (cantidad por precio [segun documentacion])',
+  fctr_tvta_mesped STRING COMMENT 'Meson Pedido (M=Meson P=Pedido)',
+  fctr_tvta_voldet STRING COMMENT 'Volumen Detalle (D=Detalle, V=Volumen)',
+  fctr_tipres STRING COMMENT 'Tipo de despacho (C=Cliente, S=Sodimac, P=Proveedor)',
+  fctr_oc INT COMMENT 'Número de la orden de compra asociado al PVT que dá origen a la factura',
+  fctr_valfle DECIMAL(20,4) COMMENT 'Valor del flete',
+  fctr_cosfle DECIMAL(20,4) COMMENT 'Costo del flete',
+  fctr_despachador INT COMMENT 'Codigo de destino del despacho (no se tiene claro si es una direccion o un codigo asociado por caja)',
+  fctr_tipo_pvt STRING COMMENT 'Tipo de facturacion en el PVT (pedido de venta, asociado a venta empresa). (C=Contra entrega, A=Anticipado, vacio=nada)',
+  fctr_nro_guias INT COMMENT 'Nro guia de despacho asociado al despacho',
+  fctr_nro_pvt INT COMMENT 'Numero del PVT (pedido de venta)',
+  fctr_nro_lblanca DECIMAL(20,4) COMMENT 'No se esta ocupando',
+  fctr_rut_especialista STRING COMMENT 'Rut del especialista, cliente con convenio especial (asociado al circulo de especialistas, igual que para boleta)',
+  fctr_tdct2 INT COMMENT 'Tipo de documento de factura (Factura Nominales, Facturas Electronica, Factura excenta de IVA, etc...)',
+  fctr_timestamp STRING COMMENT 'timestamp de la factura',
+  fctr_ventarenueva STRING COMMENT 'No se esta ocupando',
+  fctr_n_pos DECIMAL(20,4) COMMENT 'POS de la venta',
+  fctr_nro_vtassstock DECIMAL(20,0) COMMENT 'Número de la reserva de Venta sin Stock asociada al docto. De venta',
+  fctr_num_cotiza DECIMAL(20,0) COMMENT 'Numero de cotizacion que da origen a la venta',
+  fctr_monto_tcc DECIMAL(20,4) COMMENT 'Monto utilizado tarjeta convenio sodimac. Similar a giftcard, pero para convenios.',
+  fctr_correlativo_tcc DECIMAL(20,4) COMMENT 'Numero de la tarjeta de convenio sodimac.',
+  fctr_vnddr_cotiz STRING COMMENT 'Codigo del vendedor de la cotizacion',
+  oc_cliente STRING COMMENT 'Orden de compra asociada a la factura, originario del cliente',
+  fctr_vta_especialista STRING COMMENT 'Rut del circulo especialista.',
+  fctr_efectivo_ingresado DECIMAL(20,4) COMMENT 'Monto en efectivo ingresado por el cajero. Este monto puede ser mas alto que la propia boleta',
+  fctr_monto_ncr DECIMAL(20,4) COMMENT 'Monto en monto ncr por el cajero. Este monto puede ser mas alto que la propia boleta (nota credito)',
+  fctr_segundo_impresion STRING COMMENT 'segundo en que fue impresa la boleta',
+  fctr_hora_inicio STRING COMMENT 'hora inicio de la factura',
+  job_id STRING
+)
+PARTITIONED BY (
+  highwatermark STRING
+)
+WITH SERDEPROPERTIES ('serialization.format'='1')
+STORED AS PARQUET
+LOCATION 'hdfs://falabellatam01/ambiente1/pro/rtl/sod/cl/com/land/SOD_CINFO_CL/factura'
+TBLPROPERTIES ('last_modified_by'='hive', 'last_modified_time'='1512592299', 'parquet.compression'='SNAPPY')	

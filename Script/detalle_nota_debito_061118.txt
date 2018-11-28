@@ -1,0 +1,39 @@
+CREATE TABLE sod_cinfo_cl.detalle_nota_debito (
+  ntdb_ano TINYINT COMMENT 'Año',
+  ntdb_mes TINYINT COMMENT 'mes',
+  ntdb_dia TINYINT COMMENT 'dia',
+  unor_codg INT COMMENT 'codigo local',
+  ntdb_corr DECIMAL(15,0) COMMENT 'correlativo nota debito',
+  dtnd_item SMALLINT COMMENT 'item nota debito',
+  item_codg INT COMMENT 'SKU sin digito verificador',
+  dtnd_cntd DECIMAL(11,2) COMMENT 'cantidad de articulos',
+  dtnd_costocero DECIMAL(11,2) COMMENT 'Costo del producto puesto en la tienda',
+  dtnd_prec DECIMAL(11,2) COMMENT 'precio unitario neto',
+  dtnd_reser_vta_sstock STRING COMMENT 'Inidicador S/N si documento origen fue con despacho o no.',
+  dtnd_codigo_prom INT COMMENT 'No se esta ocupando',
+  dtnd_tipo_promocion STRING COMMENT 'No se esta ocupando',
+  dtnd_desc_prod STRING COMMENT 'Descripcion del producto',
+  dtnd_um_venta STRING COMMENT 'Unidad de medida de la venta',
+  dtnd_ctd_vendida_um_venta DECIMAL(11,2) COMMENT 'cantidad de unidad de medida de venta',
+  dtnd_precio_um_venta DECIMAL(11,2) COMMENT 'precio por unidad de medida',
+  dtnd_precio_extendido DECIMAL(11,2) COMMENT 'PxQ precio por cantidad',
+  dtnd_sku STRING COMMENT 'SKU del producto con digito verificador',
+  dtnd_hua STRING COMMENT 'Ubicacion del producto en la tienda.',
+  dtnd_metodo_distribu STRING COMMENT 'Codigo de metodo de distribucion. Como se abastece el producto desde el origen del producto hasta llegar a la tienda',
+  dtnd_cod_metdistribu STRING COMMENT 'Codigo de metodo de distribucion. Si una bodega es la que distribuye, viene codigo de la bodega (codigo del local de la bodega), puede tambien venir codigo de proveedor.',
+  dtnd_comudespacho STRING COMMENT 'Comuna donde se debe despachar el producto',
+  dtnd_costoflete1 DECIMAL(15,2) COMMENT 'Costo del flete. Costo del producto hasta la tienda',
+  dtnd_costoflete2 DECIMAL(15,2) COMMENT 'Costo del flete. Costo de la "ultima milla", desde la tienda hasta el cliente',
+  dtnd_costologistico DECIMAL(15,2) COMMENT 'Costo logistico.',
+  dtnd_recupero DECIMAL(15,2) COMMENT 'No se esta ocupando',
+  dtnd_precio_publico DECIMAL(15,2) COMMENT 'No se esta ocupando',
+  dtnd_marcaprod STRING COMMENT 'Descriptivo del tipo de producto (si es producto Stock, producto PE [producto especial], o FAM [generico])',
+  job_id STRING
+)
+PARTITIONED BY (
+  highwatermark STRING
+)
+WITH SERDEPROPERTIES ('serialization.format'='1')
+STORED AS PARQUET
+LOCATION 'hdfs://falabellatam01/ambiente1/pro/rtl/sod/cl/com/land/SOD_CINFO_CL/detalle_nota_debito'
+TBLPROPERTIES ('last_modified_by'='hive', 'last_modified_time'='1512592290', 'parquet.compression'='SNAPPY')	

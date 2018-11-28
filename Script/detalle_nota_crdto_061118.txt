@@ -1,0 +1,42 @@
+CREATE TABLE sod_cinfo_cl.detalle_nota_crdto (
+  ntcr_ano TINYINT COMMENT 'Año',
+  ntcr_mes TINYINT COMMENT 'mes',
+  ntcr_dia TINYINT COMMENT 'dia',
+  unor_codg SMALLINT COMMENT 'Numero de Local',
+  ntcr_corr INT COMMENT 'correlativo detalle nota credito',
+  dnct_item TINYINT COMMENT 'Item',
+  item_codg INT COMMENT 'SKU sin digito verificador',
+  dnct_cntd DECIMAL(11,2) COMMENT 'Cantidad',
+  dnct_prec DECIMAL(11,2) COMMENT 'Precio Sin Impuestos',
+  dnct_ctun DECIMAL(11,2) COMMENT 'Costo',
+  ntcr_marca_lb STRING COMMENT 'Marca LB S/N. S=Producto esta con despacho. Si hay reserva, y aqui esta con S, entonces el producto esta con despacho a domicilio.',
+  dnct_cod_prom DECIMAL(10,0) COMMENT 'Código de la PROMOCIÓN aplicada al producto',
+  dnct_tipo_prom STRING COMMENT 'Si el producto es parte de una PROMOCION, actúa como Producto Condición o un Beneficio de la PROMOCION',
+  dnct_desc_prod STRING COMMENT 'Descripcion del producto',
+  dnct_um_venta STRING COMMENT 'Unidad de medida de la venta',
+  dnct_ctd_vendida_um_venta DECIMAL(11,2) COMMENT 'cantidad total vendida para la unidad asociado a la unidad de medida',
+  dnct_precio_um_venta DECIMAL(11,2) COMMENT 'precio por unidad de medida',
+  dnct_precio_extendido DECIMAL(11,2) COMMENT 'PxQ. Precio unitario por cantidad.',
+  dnct_sku STRING COMMENT 'SKU del producto con digito verificador',
+  dnct_recarga_telefonica STRING COMMENT 'Si la Nota Credito fue por una recarga telefonica',
+  dnct_hua STRING COMMENT 'Agrega Hua en el orden: Area (1), Depto (2), Lineal (1), Metro (2) , (A01B02)',
+  dnct_metodo_distribu STRING COMMENT 'Codigo de metodo de distribucion. Como se abastece el producto desde el origen del producto hasta llegar a la tienda',
+  dnct_cod_metdistribu STRING COMMENT 'Codigo de metodo de distribucion. Si una bodega es la que distribuye, viene codigo de la bodega (codigo del local de la bodega), puede tambien venir codigo de proveedor.',
+  dnct_comudespacho STRING COMMENT 'Comuna donde se debe despachar el producto',
+  dnct_costoflete1 DECIMAL(15,2) COMMENT 'Costo del flete. Costo del producto hasta la tienda',
+  dnct_costoflete2 DECIMAL(15,2) COMMENT 'Costo del flete. Costo de la "ultima milla", desde la tienda hasta el cliente',
+  dnct_costologistico DECIMAL(15,2) COMMENT 'Costo logistico.',
+  dnct_recupero DECIMAL(15,2) COMMENT 'No se esta ocupando',
+  dnct_precio_publico DECIMAL(15,2) COMMENT 'Precio publicado sin descuento',
+  dnct_monto_tcc DECIMAL(12,2) COMMENT 'Monto utilizado tarjeta convenio sodimac. Similar a giftcard, pero para convenios.',
+  dnct_marcaprod STRING COMMENT 'Marca de producto',
+  dnct_venta_detalle STRING COMMENT 'Flag Producto Detalle (Flag utilizado para diferenciar productos detalle. (‘S’ o ‘N’)',
+  job_id STRING
+)
+PARTITIONED BY (
+  highwatermark STRING
+)
+WITH SERDEPROPERTIES ('serialization.format'='1')
+STORED AS PARQUET
+LOCATION 'hdfs://falabellatam01/ambiente1/pro/rtl/sod/cl/com/land/SOD_CINFO_CL/detalle_nota_crdto'
+TBLPROPERTIES ('last_modified_by'='hive', 'last_modified_time'='1512592284', 'parquet.compression'='SNAPPY')	

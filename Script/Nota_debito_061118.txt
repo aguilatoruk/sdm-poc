@@ -1,0 +1,48 @@
+CREATE TABLE sod_cinfo_cl.nota_debito (
+  ntdb_ano TINYINT COMMENT 'Año',
+  ntdb_mes TINYINT COMMENT 'mes',
+  ntdb_dia TINYINT COMMENT 'dia',
+  unor_codg INT COMMENT 'codigo local',
+  ntdb_corr DECIMAL(15,0) COMMENT 'correlativo nota debito',
+  ntdb_hh TINYINT COMMENT 'hora de la nota de debito',
+  ntdb_mm TINYINT COMMENT 'minuto de la nota de debito',
+  ntdb_fecha DECIMAL(8,0) COMMENT 'No se esta ocupando',
+  rut_clie INT COMMENT 'rut cliente',
+  ntdb_cod_dir STRING COMMENT 'No se esta ocupando',
+  ntdb_caja INT COMMENT 'codigo de la caja',
+  ntdb_vendedor STRING COMMENT 'codigo del vendedor',
+  ntdb_tipo_ndd STRING COMMENT 'tipo de nota de debito (1=devolucion, 3=administrativa)',
+  ntdb_neto DECIMAL(13,2) COMMENT 'monto neto',
+  ntdb_iva DECIMAL(13,2) COMMENT 'monto del iva',
+  ntdb_total DECIMAL(13,2) COMMENT 'monto total con iva',
+  ntdb_num_reser_sstock DECIMAL(20,0) COMMENT 'Numero de reserva del DAD. Es un numero compuesto. Si es distitno de 0 o null, corresponde a DAD. 2 primeros digitos = canal de venta, 3r digito es el subcanal, resto de los numeros estan asociados al numero de la reserva. Maestro de canales no estan',
+  ntdb_timestamp STRING COMMENT 'timestamp de la nota de dedito',
+  ntdb_tipo_doc_ref STRING COMMENT 'tipo de documento de referencia origen (NCR=nota de credito, SOLO vienen notas de creditos)',
+  ntdb_num_doc_ref INT COMMENT 'numero de documento origen',
+  ntdb_num_suc_doc_ref INT COMMENT 'Sucursal que dio origen al documento original de la NOTA DE CREDITO',
+  ntdb_fecha_doc_ref DECIMAL(8,0) COMMENT 'fecha del documento original NCR',
+  ntdb_ano_doc_ref TINYINT COMMENT 'No se esta ocupando',
+  ntdb_mes_doc_ref TINYINT COMMENT 'No se esta ocupando',
+  ntdb_dia_doc_ref TINYINT COMMENT 'No se esta ocupando',
+  ntdb_forma_pag_doc_ref STRING COMMENT 'Forma de pago principal del documento referencia',
+  ntdb_tipo_ncr_ref STRING COMMENT 'Causal de la nota de credito. (es codigo) (si bien el nombre del campo no lo indica, esto va asociado a la CAUSAL de la nota de credito)',
+  ntdb_tipo_doc_vta_org STRING COMMENT 'tipo de documento de venta origen (ej: BLT o FME)',
+  ntdb_num_doc_vta_org INT COMMENT 'Numero del documento origen',
+  ntdb_num_suc_vta_org INT COMMENT 'Sucursal que dio origen al documento original la boleta/factura)',
+  ntdb_fecha_doc_vta_org DECIMAL(8,0) COMMENT 'fecha del documento de venta original',
+  ntdb_ano_doc_vta_org TINYINT COMMENT 'No se esta ocupando',
+  ntdb_mes_doc_vta_org TINYINT COMMENT 'No se esta ocupando',
+  ntdb_dia_doc_vta_org TINYINT COMMENT 'No se esta ocupando',
+  ntdb_tipo_vta STRING COMMENT 'Tipo de venta (S=Stock [desde la tienda], D=Directa [directo al proveedor])',
+  ntdb_tipo_pedido STRING COMMENT 'No se esta ocupando',
+  ntdb_num_pedido DECIMAL(15,0) COMMENT 'No se esta ocupando',
+  ntdb_tipo_beneficio STRING COMMENT 'codigo, 0,1,2 o 3. Ej: Venta normal, Venta personal, Venta costo 0, Venta costo 0 +5%. Tipifica la venta. Similar a tdct (asociado al documento origen)',
+  job_id STRING
+)
+PARTITIONED BY (
+  highwatermark STRING
+)
+WITH SERDEPROPERTIES ('serialization.format'='1')
+STORED AS PARQUET
+LOCATION 'hdfs://falabellatam01/ambiente1/pro/rtl/sod/cl/com/land/SOD_CINFO_CL/nota_debito'
+TBLPROPERTIES ('last_modified_by'='hive', 'last_modified_time'='1512592321', 'parquet.compression'='SNAPPY')	

@@ -1,0 +1,25 @@
+CREATE TABLE sod_cinfo_cl.desc_cargo_nota_debito (
+  ntdb_ano TINYINT COMMENT 'Año',
+  ntdb_mes TINYINT COMMENT 'mes',
+  ntdb_dia TINYINT COMMENT 'dia',
+  unor_codg SMALLINT COMMENT 'codigo local',
+  ntdb_corr DECIMAL(12,0) COMMENT 'correlativo nota de dedito',
+  dcnd_nmro TINYINT COMMENT 'correlativo cargo/descuento nota debito',
+  tdcg_codg TINYINT COMMENT 'Codigo del cargo/descuento',
+  dcnd_dccg STRING COMMENT 'Valores C/D. C=Cargo [suma a la boleta, ej: flete] y D=Descuento [quita de la boleta]',
+  dcnd_mnto DECIMAL(11,2) COMMENT 'Monto asociado al C/D',
+  dcnd_desc_prod STRING COMMENT 'Descripcion del cargo/descuento',
+  dcnd_um_venta STRING COMMENT 'Unidad de medida de la venta',
+  dcnd_precio_extendido DECIMAL(11,2) COMMENT 'PxQ. Para este caso, debiese ser el mismo valor que el monto.',
+  dcnd_ctd_vendida_um_venta DECIMAL(11,2) COMMENT 'No se esta ocupando',
+  dcnd_sku STRING COMMENT 'Codigo de producto, asociado al cargo/descuento (cargos son considerados como SKUs)',
+  dcnd_documento_ndd STRING COMMENT 'No se esta ocupando',
+  job_id STRING
+)
+PARTITIONED BY (
+  highwatermark STRING
+)
+WITH SERDEPROPERTIES ('serialization.format'='1')
+STORED AS PARQUET
+LOCATION 'hdfs://falabellatam01/ambiente1/pro/rtl/sod/cl/com/land/SOD_CINFO_CL/desc_cargo_nota_debito'
+TBLPROPERTIES ('last_modified_by'='hive', 'last_modified_time'='1512592260', 'parquet.compression'='SNAPPY')	

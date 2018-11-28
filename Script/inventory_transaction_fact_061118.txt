@@ -1,0 +1,49 @@
+CREATE TABLE sod_onehouse.inventory_transaction_fact (
+  inventory_transaction_id DECIMAL(20,0) COMMENT 'The transaction audit number, uniquely identifying all transactions.',
+  transaction_accounting_dt STRING COMMENT 'Accounting date of the actual transaction',
+  transaction_dttm STRING COMMENT 'Timestamp of the transaction process',
+  transaction_session_num DECIMAL(12,0) COMMENT 'Grouping value of transactions.',
+  transaction_sequence_num DECIMAL(12,0) COMMENT 'Sequence related to the session num',
+  item_id STRING COMMENT 'A unique system assigned identifier for the retailers SKU.',
+  location_id INT COMMENT 'A unique system assigned identifier for the Location.',
+  major_report_cd STRING COMMENT 'Major Report Code defines the high level of the inventory transaction, such as SS-Sales.',
+  minor_report_cd STRING COMMENT 'Minor Report Code defines the source level of the inventory transaction, such as Boleta or Factura.',
+  inventory_type_cd STRING COMMENT 'Code of the Tipification of the Inventory.',
+  inventory_transaction_type_cd STRING COMMENT 'Code of the Inventory Transaction Type',
+  currency_cd STRING COMMENT 'Code of the currency',
+  transaction_source_reference_desc STRING COMMENT 'Reference of the source of the transaction',
+  first_origin_document_num STRING COMMENT 'Origin document number.',
+  second_origin_document_num STRING,
+  transaction_qty DECIMAL(18,4) COMMENT 'Transaction quantity.  Depending on the transaction type, this wont necesarrly be items, they can be adjustments as well.',
+  transaction_net_amt DECIMAL(20,4) COMMENT 'The transaction net amount. The Net amount does not apply to Chile.',
+  transaction_amt DECIMAL(20,4) COMMENT 'Transaction Amount, which includes taxes. (only applies to Chile)',
+  unit_cost_amt DECIMAL(20,4) COMMENT 'Unit cost amount.  It considers charges and discounts.',
+  total_unit_tax_amt DECIMAL(20,4) COMMENT 'Total tax amount for the unit.',
+  total_pos_extended_amt DECIMAL(20,4) COMMENT 'Total Extended Amount from the POS.',
+  extended_amt DECIMAL(20,4) COMMENT 'Extendended Amount',
+  extended_cost_amt DECIMAL(20,4) COMMENT 'Extendened Cost Amount',
+  extended_tax_amt DECIMAL(20,4) COMMENT 'Extended Tax Amount',
+  auditable_flg STRING COMMENT 'Flag that indicates if the record is auditable.',
+  affects_cost_flg STRING COMMENT 'Flag that indicates if the record affects cost.',
+  affects_ballance_cd STRING COMMENT 'The type of ballance status affected by the transaction.',
+  ballance_effect_sign_qty_flg STRING COMMENT 'The sign effect on quantity',
+  ballance_effect_sign_price_flg STRING COMMENT 'The sign effect on price',
+  ballance_effect_sign_cost_flg STRING COMMENT 'The sign effect on cost',
+  ballance_effect_sign_tax_flg STRING COMMENT 'The sign effect on tax',
+  ballance_multiplier_factor_flg STRING COMMENT 'The multiplier number used for the ballance.',
+  result_onhand_qty DECIMAL(18,4) COMMENT 'The transaction On Hand quantity result',
+  result_onhand_amt DECIMAL(20,4) COMMENT 'The transaction On Hand amount result',
+  result_onhand_cost_amt DECIMAL(20,4) COMMENT 'The transaction On Hand cost result',
+  job_id STRING COMMENT 'Operational field used to keep track of the record loading'
+)
+PARTITIONED BY (
+  transaction_dt STRING COMMENT 'Date of the transaction process', 
+  country_id STRING COMMENT 'This is the country code in format ISO3.  Example CL, AR, PE, CO, UR.', 
+  business_unit_id STRING COMMENT 'A unique retailer assigned identifier for an RetailStore, DistributionCenter or AdministrationCenter'
+)
+ COMMENT 'Contains all the inventory movements and transactions.  It can be considered as an audit/accounting table.'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '|'
+WITH SERDEPROPERTIES ('field.delim'='|', 'serialization.format'='|')
+STORED AS PARQUET
+LOCATION 'hdfs://falabellatam01/ambiente1/pro/rtl/sod/cp/cor/exp/SOD_ONEHOUSE/inventory_transaction_fact'
+TBLPROPERTIES ('parquet.compression'='SNAPPY')	

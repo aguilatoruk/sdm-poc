@@ -1,0 +1,31 @@
+ CREATE TABLE agg_sales_header(                   
+   location_id int COMMENT 'A unique system assigned identifier for the Location.',  
+   sales_return_type_cd string COMMENT 'Code of the type of document loaded in Sales/Return. Options are: blta: Boleta. fctr: Factura. ntcr: Nota Credito. ntdb: Nota Debido. cdbo: Cargo Descuento Boleta. cdft: Cargo Descuento Factura. cdnc: Cargo Descuento Nota Credito. cdnd: Cargo Descuento Not',  
+   st_document_total_net_amt decimal(20,4) COMMENT 'Standard field containing the Total Net Amount of the document.',  
+   st_document_total_amt decimal(20,4) COMMENT 'Standard field containing the Total Amount of the document.',  
+   agg_transaction_cnt int COMMENT 'Aggregate field storing the total transaction counts according the PK (country, location, document_type, date).',  
+   business_area_sales_flg string COMMENT 'Highest level of the sales hierarchy flag. The possible values are: VE: Venta Empresa. VR: Venta Retail. ',  
+   business_area_sales_desc string COMMENT 'Description of the Bunsiness Area Sales Flalg',  
+   agg_business_area_sales_cnt int COMMENT 'Aggregate field storing the total transaction counts for the first level of flags (Business_Area_Sales).',  
+   job_id string COMMENT 'Operational field used to keep track of the record loading') 
+ COMMENT 'Aggregate table for reporting purposes.  It holds the sales information opened by the flag sales level at the header level.' 
+ PARTITIONED BY (                                   
+   country_id string COMMENT 'Country in which the transaction is being done.',  
+   business_unit_id string COMMENT 'A unique retailer assigned identifier for an RetailStore, DistributionCenter or AdministrationCenter',  
+   sales_return_dt string COMMENT 'Date in which the sale/return occured.') 
+ ROW FORMAT SERDE                                   
+   'org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe'  
+ WITH SERDEPROPERTIES (                             
+   'field.delim'='',                               
+   'serialization.format'='')                       
+ STORED AS INPUTFORMAT                              
+   'org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat'  
+ OUTPUTFORMAT                                       
+   'org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat' 
+ LOCATION                                           
+   'hdfs://falabellatam01/ambiente1/pro/rtl/sod/cp/cor/exp/SOD_ONEHOUSE_EXP/Agg_Sales_Header' 
+ TBLPROPERTIES (                                    
+   'last_modified_by'='hive',                       
+   'last_modified_time'='1520375636',              
+   'parquet.compression'='SNAPPY',                  
+   'transient_lastDdlTime'='1520375636')   

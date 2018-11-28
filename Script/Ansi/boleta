@@ -1,0 +1,39 @@
+ CREATE TABLE IF NOT EXISTS 
+
+sodimac_one_house.boleta 
+(
+  blta_ano INT64 ,
+  blta_mes INT64 ,
+  blta_dia INT64 ,
+  unor_codg SMALLINT ,
+  blta_corr INT  ,
+  clnt_rut INT  ,
+  blta_uems INT64 ,
+  blta_hh INT64 ,
+  blta_mm INT64 ,
+  blta_tdct STRING ,
+  blta_tot INT64 ,
+  blta_csto INT64 ,
+  blta_operador INT  ,
+  blta_nro_lblanca DECIMAL(20,0) ,
+  blta_rut_especialista STRING ,
+  blta_nro_novios STRING  ,
+  blta_tdct2 INT  ,
+  blta_timestamp STRING ,
+  blta_ventarenueva STRING ,
+  blta_nro_vtassstock DECIMAL(20,0) ,
+  blta_nro_telefono DECIMAL(20,0) ,
+  blta_canjep STRING ,
+  blta_tipo_beneficio STRING ,
+  blta_monto_tcc INT64 ,
+  blta_correlativo_tcc INT64 ,
+  blta_vta_especialista STRING ,
+  blta_efectivo_ingresado INT64 ,
+  blta_monto_ncr INT64 ,
+  blta_segundo_impresion STRING ,
+  blta_hora_inicio STRING ,
+  job_id STRING
+)
+PARTITIONED BY (
+  highwatermark STRING
+)

@@ -1,0 +1,44 @@
+Boletas
+
+CREATE TABLE sod_cinfo_cl.boleta (
+  blta_ano TINYINT COMMENT 'Año',
+  blta_mes TINYINT COMMENT 'Mes',
+  blta_dia TINYINT COMMENT 'Dia',
+  unor_codg SMALLINT COMMENT 'Tienda',
+  blta_corr INT COMMENT 'correlativo boleta',
+  clnt_rut INT COMMENT 'Documento de Identificación del Cliente (Se genera para las ventas personalizadas o ventas al personal (DNI, CI, etc.)',
+  blta_uems TINYINT COMMENT 'Codigo de la caja',
+  blta_hh TINYINT COMMENT 'Hora de la transaccion',
+  blta_mm TINYINT COMMENT 'Minuto de la transaccion',
+  blta_tdct STRING COMMENT 'Tipo de documento (Ticket C para: B =consumidor final E = Empleado)',
+  blta_tot DECIMAL(11,2) COMMENT 'Total bruto de la boleta',
+  blta_csto DECIMAL(11,2) COMMENT 'costo total del documento',
+  blta_operador INT COMMENT 'Código del cajero que generó el documento',
+  blta_nro_lblanca DECIMAL(20,0) COMMENT 'No se esta ocupando',
+  blta_rut_especialista STRING COMMENT 'registrado los ruts de los "especialistas". Es un "club" de personas especiales. Si el campo esta siendo usado, entonces hace parte del circulo de especialistas. El rut debiese ser el mismo que el rut del cliente. Se usaria solo como marca.',
+  blta_nro_novios STRING COMMENT 'numero de novios',
+  blta_tdct2 INT COMMENT 'Tipo de documento de boleta',
+  blta_timestamp STRING COMMENT 'hora de emision de la boleta en formato timestamp',
+  blta_ventarenueva STRING COMMENT 'No se esta ocupando',
+  blta_nro_vtassstock DECIMAL(20,0) COMMENT 'Número de la reserva de Venta sin Stock asociada al docto. De venta',
+  blta_nro_telefono DECIMAL(20,0) COMMENT 'Nº de teléfono',
+  blta_canjep STRING COMMENT 'S o N, indica si se usaron puntos para canje.',
+  blta_tipo_beneficio STRING COMMENT 'codigo, 0,1,2 o 3. Ej: Venta normal, Venta personal, Venta costo 0, Venta costo 0 +5%. Tipifica la venta. Similar a tdct',
+  blta_monto_tcc DECIMAL(12,2) COMMENT 'Monto utilizado tarjeta convenio sodimac. Similar a giftcard, pero para convenios.',
+  blta_correlativo_tcc DECIMAL(12,0) COMMENT 'Numero de la tarjeta de convenio sodimac.',
+  blta_vta_especialista STRING COMMENT 'Rut del circulo especialista.',
+  blta_efectivo_ingresado DECIMAL(11,2) COMMENT 'Monto en efectivo ingresado por el cajero. Este monto puede ser mas alto que la propia boleta',
+  blta_monto_ncr DECIMAL(11,2) COMMENT 'Monto de NOTA DE CREDITO usado para pagar la boleta',
+  blta_segundo_impresion STRING COMMENT 'segundo en que fue impresa la boleta',
+  blta_hora_inicio STRING COMMENT 'hh:mm:ss de inicio de la boleta',
+  job_id STRING
+)
+PARTITIONED BY (
+  highwatermark STRING
+)
+WITH SERDEPROPERTIES ('serialization.format'='1')
+STORED AS PARQUET
+LOCATION 'hdfs://falabellatam01/ambiente1/pro/rtl/sod/cl/com/land/SOD_CINFO_CL/boleta'
+TBLPROPERTIES ('last_modified_by'='hive', 'last_modified_time'='1512592247', 'parquet.compression'='SNAPPY')	
+
+

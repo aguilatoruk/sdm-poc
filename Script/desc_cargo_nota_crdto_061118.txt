@@ -1,0 +1,25 @@
+CREATE TABLE sod_cinfo_cl.desc_cargo_nota_crdto (
+  ntcr_ano TINYINT COMMENT 'Año',
+  ntcr_mes TINYINT COMMENT 'mes',
+  ntcr_dia TINYINT COMMENT 'dia',
+  unor_codg SMALLINT COMMENT 'Numero de Local',
+  ntcr_corr INT COMMENT 'Numero de documento de ventas',
+  dcnc_nmro TINYINT COMMENT 'Correlativo de cargo dentro de documento de ventas',
+  tdcg_codg TINYINT COMMENT 'Codigo del cargo/descuento',
+  dcnc_dccg STRING COMMENT 'Documento (TIB)',
+  dcnc_mnto DECIMAL(11,2) COMMENT 'Monto del Cargo sin Impuestos',
+  dcnc_desc_prod STRING COMMENT 'Descripcion del cargo/descuento',
+  dcnc_um_venta STRING COMMENT 'Unidad de medida de la venta',
+  dcnc_precio_extendido DECIMAL(11,2) COMMENT 'PxQ. Para este caso, debiese ser el mismo valor que el monto.',
+  dcnc_ctd_vendida_um_venta DECIMAL(11,2) COMMENT 'No se esta ocupando',
+  dcnc_sku STRING COMMENT 'Codigo de producto, asociado al cargo/descuento (cargos son considerados como SKUs)',
+  dcnc_documento_ncr STRING COMMENT 'No se esta ocupando',
+  job_id STRING
+)
+PARTITIONED BY (
+  highwatermark STRING
+)
+WITH SERDEPROPERTIES ('serialization.format'='1')
+STORED AS PARQUET
+LOCATION 'hdfs://falabellatam01/ambiente1/pro/rtl/sod/cl/com/land/SOD_CINFO_CL/desc_cargo_nota_crdto'
+TBLPROPERTIES ('last_modified_by'='hive', 'last_modified_time'='1512592257', 'parquet.compression'='SNAPPY')	

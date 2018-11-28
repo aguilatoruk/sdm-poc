@@ -1,0 +1,17 @@
+CREATE TABLE sod_cinfo_cl.cartera_clientes_vig (
+  sucursal STRING,
+  rut_cliente STRING,
+  vendedor STRING,
+  fecha_inicio STRING,
+  fecha_fin STRING,
+  numsuc SMALLINT,
+  codvendor INT,
+  rut INT,
+  dvrut STRING,
+  flg_termino INT,
+  job_id STRING
+)
+WITH SERDEPROPERTIES ('serialization.format'='1')
+STORED AS PARQUET
+LOCATION 'hdfs://falabellatam01/ambiente1/pro/rtl/sod/cl/com/land/SOD_CINFO_CL/cartera_clientes_vig'
+TBLPROPERTIES ('parquet.compression'='SNAPPY')	
